@@ -16,3 +16,4 @@ C:\Users\enosh.tsur\source\repos\exercises\exercises\bin\Debug\net8.0\LanguageEx
 C:\Users\enosh.tsur\source\repos\exercises\exercises\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\enosh.tsur\source\repos\exercises\exercises\obj\Debug\net8.0\exercises.csproj.AssemblyReference.cache
 C:\Users\enosh.tsur\source\repos\exercises\exercises\obj\Debug\net8.0\exercises.csproj.Up2Date
+C:\Users\enosh.tsur\source\repos\exercises\exercises\obj\Debug\net8.0\exercises.sourcelink.json

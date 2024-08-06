@@ -3,6 +3,7 @@ using static LanguageExt.Prelude;
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using LanguageExt.SomeHelp;
+using LanguageExt.Pipes;
 
 namespace exercises
 {
@@ -28,18 +29,20 @@ namespace exercises
         public static Dictionary<string, int> FilterEvenValues(Dictionary<string, int> dict)
         {
             return dict.Where(kvp => kvp.Value % 2 == 0)
-                       .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                       .ToDictionary();
         }
 
         // Create a function that returns the key with the maximum value in a dictionary.
         public static string GetKeyWithMaxValue(Dictionary<string, int> dict)
         {
-            return dict.OrderByDescending(kvp => kvp.Value).First().Key;
+           return dict.MaxBy(kvp => kvp.Value).Key;
         }
 
         // Write a function that groups a list of strings by their length,
         // returning a dictionary where the key is the length and the value is a
         // list of strings of that length.
+        // 5 [tomer, enosh]
+        // 4 [alef, omer] 
         public static Dictionary<int, List<string>> GroupStringsByLength(List<string> strings)
         {
             return strings.GroupBy(s => s.Length)
@@ -47,7 +50,7 @@ namespace exercises
         }
 
         // Create a queue of strings and enqueue 3 strings
-        public static void Enqueue ()
+        public static void Enqueue()
         {
             Queue<string> fruitQueue = new();
 
@@ -87,11 +90,89 @@ namespace exercises
             Console.WriteLine($"Queue count after clear: {charQueue.Count}");  // Output: 0
         }
 
+        // Filter Queue Elements Create a queue of integers and use LINQ
+        // to create a new queue with only even numbers.
+        public static void FilterEvenQueues()
+        {
+            IEnumerable<int> toQu = [2, 3, 4, 5];
+
+            Queue<int> queues = toQu.ToQueue();
+
+            Queue<int> numbers = new([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
+            Queue<int> evens = numbers.Where(x => x % 2 == 0).ToQueue();
+
+            Queue<int> evenNumbers = new(numbers.Where(n => n % 2 == 0));
+            Console.WriteLine(string.Join(",", evenNumbers));
+        }
+
+        // Transform Queue Elements Double each element in a queue of integers.
+        public static void TransformQueues()
+        {
+            Queue<int> original = new([1, 2, 3, 4, 5]);
+            Queue<int> doubled = original.Select(n => n * 2).ToQueue();
+            Console.WriteLine(string.Join(",", doubled));
+        }
+
+        // Find the maximum and the minimum values in queue
+        public static void MaxAndMin()
+        {
+            Queue<int> values = new([5, 2, 8, 1, 9]);
+            int max = values.Max();
+            int min = values.Min();
+
+            Console.WriteLine($"Max: {max}, Min: {min}");
+        }
+
         static void Main(string[] args)
         {
 
+            Dictionary<string, int> ages = new()
+           {
+               {"enosh", 34 },
+               {"alef", 16 },
+               {"avi", 450 },
+                {"elly", 23},
+                {"tomer", 12 }
+           };
+
+            Dictionary<string, int> segelAges = new()
+            {
+                {"elly", 27 },
+                {"uriel", 120 },
+                {"tomer", 502 },
+                {"ariel", 22 },
+                {"enosh", 45 }
+            };
+
+            Dictionary<string, int> studentsGrades = new()
+            {
+                { "mendy", 100 },
+                { "bejamin", 12 },
+                { "enosh", 0 },
+                { "ariel", 100 },
+                { "michael", 12 },
+                { "alef", 0 }
+            };
+
+            var group = studentsGrades.GroupBy(x => x.Value)
+                .ToDictionary(x => x.Key, x => x.Select(x => x.Key).ToList());
+
+            // 5 [enosh, tomer]
+            // 4 [alef]
+
+           foreach(var x in group)
+            {
+                Console.WriteLine(x.Key + " " +  $"[{string.Join(",",x.Value)}]");
+            }
 
 
+
+            var combined = ages.Concat(segelAges)
+                .GroupBy(kvp => kvp.Key)
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Select(x => x.Value).ToList());
+
+          
 
 
         }
